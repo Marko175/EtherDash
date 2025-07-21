@@ -1,6 +1,11 @@
 import streamlit as st
-import requests
 import pandas as pd
+import requests
+import time
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
 
 # === CONFIG ===
 ETHERSCAN_API_KEY = "S8SFCF8MJMW53P7YTW9UC4KEE1UMZPGQ5G"
