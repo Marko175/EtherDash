@@ -79,7 +79,7 @@ if address:
             st.warning("⚠️ No transactions found in the past 2 years.")
         else:
             df = pd.DataFrame(all_txs)
-            #df["timeStamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit='s')
+            df["timeStamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit='s')
             df["value_ETH"] = df["value"].astype(float) / 1e18
             df["gasPrice_Gwei"] = df["gasPrice"].astype(float) / 1e9
             df["gasFee_ETH"] = (df["gasUsed"].astype(float) * df["gasPrice"].astype(float)) / 1e18
