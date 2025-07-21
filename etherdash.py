@@ -172,7 +172,7 @@ if wallet:
     gas_cutoff = df["gasFee_ETH"].quantile(0.99)
 
     # Split data
-    inliers = df[(df["value_eth"] > 0) & (df["value_ETH"] < eth_cutoff) & (df["gasFee_ETH"] < gas_cutoff)].copy()
+    inliers = df[(df["value_eth"] > 0) & (df["value_eth"] < eth_cutoff) & (df["gasFee_ETH"] < gas_cutoff)].copy()
     outliers = df[(df["value_eth"] >= eth_cutoff) | (df["gasFee_ETH"] >= gas_cutoff)].copy()
 
     # Extract data
