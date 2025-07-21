@@ -6,7 +6,7 @@ import pandas as pd
 ETHERSCAN_API_KEY = "S8SFCF8MJMW53P7YTW9UC4KEE1UMZPGQ5G"
 ETHERSCAN_API_URL = "https://api.etherscan.io/api"
 
-st.title("🔍 Ethereum Wallet Viewer")
+st.title("🔍 Ethereum Wallet Analyzer")
 
 # === User input ===
 wallet = st.text_input("Enter Ethereum wallet address")
@@ -29,7 +29,7 @@ if wallet:
         st.error(f"❌ Error fetching balance: {balance_response.get('message', 'Unknown error')}")
         st.stop()
 
-    # === Fetch transactions ===
+    # === Fetch last 10,000 transactions ===
     tx_params = {
         "module": "account",
         "action": "txlist",
@@ -37,7 +37,7 @@ if wallet:
         "startblock": 0,
         "endblock": 99999999,
         "page": 1,
-        "offset": 10,
+        "offset": 10000,
         "sort": "desc",
         "apikey": ETHERSCAN_API_KEY
     }
@@ -52,8 +52,22 @@ if wallet:
             df = pd.DataFrame(txs)
             df["value_eth"] = df["value"].astype(float) / 1e18
             df["timestamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit="s")
+            df["isError"] = df["isError"].astype(int)
+
+            # === Failed transaction stats ===
+            total_tx = len(df)
+            failed_tx = df["isError"].sum()
+            success_rate = 100 * (1 - failed_tx / total_tx)
+
+            st.subheader("📊 Transaction Statistics")
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Total Transactions", total_tx)
+            col2.metric("Failed Transactions", failed_tx, delta_color="inverse")
+            col3.metric("Success Rate", f"{success_rate:.2f}%", delta_color="normal")
+
+            # === Show transaction table ===
             df_display = df[["timestamp", "hash", "from", "to", "value_eth", "isError"]]
-            st.subheader("📄 Last 10 Transactions")
+            st.subheader("📄 Recent Transactions (up to 10,000)")
             st.dataframe(df_display)
     else:
         st.error(f"❌ Error fetching transactions: {tx_response.get('result', 'Unknown error')}")
