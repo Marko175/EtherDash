@@ -105,7 +105,6 @@ if wallet:
             df["gasPrice_Gwei"] = df["gasPrice"].astype(float) / 1e9
             df["gasFee_ETH"] = (df["gasUsed"].astype(float) * df["gasPrice"].astype(float)) / 1e18
             df["status"] = df["isError"].apply(lambda x: "❌ Failed" if x == "1" else "✅ Success")
-            df["direction"] = df.apply(lambda row: "📤 Out" if row["from"].lower() == address.lower() else "📥 In", axis=1)
             df["tx_link"] = df["hash"].apply(lambda h: f"[View ↗](https://etherscan.io/tx/{h})")
             df["month"] = df["timeStamp"].dt.to_period("M").astype(str)
 
