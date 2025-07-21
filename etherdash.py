@@ -215,8 +215,8 @@ if wallet:
     st.subheader("📦 Gas Fee as % of ETH Transferred")
 
     # Filter only valid transactions
-    pct_df = df[df["value_ETH"] > 0].copy()
-    pct_df["fee_pct"] = (pct_df["gasFee_ETH"] / pct_df["value_ETH"]) * 100
+    pct_df = df[df["value_eth"] > 0].copy()
+    pct_df["fee_pct"] = (pct_df["gasFee_ETH"] / pct_df["value_eth"]) * 100
 
     # Remove extreme outliers (e.g. > 100%)
     pct_df = pct_df[pct_df["fee_pct"] < 1000]  # you can adjust this cap
