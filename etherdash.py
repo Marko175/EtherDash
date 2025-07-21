@@ -147,10 +147,11 @@ if wallet:
     min_fee = df["gas_fee_eth"].min()
     
     col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Total Gas Used (ETH)", f"{total_fees:.5f}")
+    col1.metric("Total Gas Used", f"{total_fees:.5f} ETH", f"${total_fees * eth_price:,.2f}")
     col2.metric("Avg Fee (ETH)", f"{average_fee:.5f}")
     col3.metric("Max Fee (ETH)", f"{max_fee:.5f}")
     col4.metric("Min Fee (ETH)", f"{min_fee:.5f}")
+    
 
     # Display
 
