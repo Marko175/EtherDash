@@ -71,3 +71,26 @@ if wallet:
             st.dataframe(df_display)
     else:
         st.error(f"❌ Error fetching transactions: {tx_response.get('result', 'Unknown error')}")
+
+    # === Gas Fee Summary ===
+    st.subheader("⛽ Gas Fee Summary")
+    
+    # Convert gas used and gas price to numeric
+    df["gasUsed"] = df["gasUsed"].astype(float)
+    df["gasPrice"] = df["gasPrice"].astype(float)
+    
+    # Compute gas fee in ETH
+    df["gas_fee_eth"] = (df["gasUsed"] * df["gasPrice"]) / 1e18
+    
+    # Show summary stats
+    total_fees = df["gas_fee_eth"].sum()
+    average_fee = df["gas_fee_eth"].mean()
+    max_fee = df["gas_fee_eth"].max()
+    min_fee = df["gas_fee_eth"].min()
+    
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Total Gas Used (ETH)", f"{total_fees:.5f}")
+    col2.metric("Avg Fee (ETH)", f"{average_fee:.5f}")
+    col3.metric("Max Fee (ETH)", f"{max_fee:.5f}")
+    col4.metric("Min Fee (ETH)", f"{min_fee:.5f}")
+
