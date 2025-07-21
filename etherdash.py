@@ -31,6 +31,8 @@ if wallet:
         return None
     
     eth_price = get_eth_price()
+    st.write(f"💱 1 ETH = ${eth_price:,.2f} USD")
+
 
 
 
