@@ -64,7 +64,7 @@ if address:
             if len(txs) < TXS_PER_PAGE:
                 break
             page += 1
-            time.sleep(0.5)
+            time.sleep(0.2)
 
         if not all_txs:
             st.warning("⚠️ No transactions found in the past 2 years.")
