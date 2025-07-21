@@ -52,7 +52,7 @@ if address:
                 "endblock": 99999999,
                 "page": page,
                 "offset": TXS_PER_PAGE,
-                "sort": "des",
+                "sort": "desc",
                 "apikey": ETHERSCAN_API_KEY
             }
 
