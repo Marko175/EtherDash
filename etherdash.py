@@ -151,17 +151,17 @@ if wallet:
 
 
     # Step 1: Define percentiles for filtering
-    eth_cutoff = df["value_ETH"].quantile(0.995)
+    eth_cutoff = df["value_eth"].quantile(0.995)
     gas_cutoff = df["gasFee_ETH"].quantile(0.995)
 
     # Step 2: Split into inliers and outliers
-    inliers = df[(df["value_ETH"] > 0) & (df["value_ETH"] < eth_cutoff) & (df["gasFee_ETH"] < gas_cutoff)].copy()
-    outliers = df[(df["value_ETH"] >= eth_cutoff) | (df["gasFee_ETH"] >= gas_cutoff)].copy()
+    inliers = df[(df["value_eth"] > 0) & (df["value_eth"] < eth_cutoff) & (df["gasFee_ETH"] < gas_cutoff)].copy()
+    outliers = df[(df["value_eth"] >= eth_cutoff) | (df["gasFee_ETH"] >= gas_cutoff)].copy()
 
     # Step 3: Prepare data
-    x_in = inliers["value_ETH"].values
+    x_in = inliers["value_eth"].values
     y_in = inliers["gasFee_ETH"].values
-    x_out = outliers["value_ETH"].values
+    x_out = outliers["value_eth"].values
     y_out = outliers["gasFee_ETH"].values
 
     # Step 4: Plot
