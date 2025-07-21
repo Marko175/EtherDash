@@ -168,17 +168,17 @@ if wallet:
     st.subheader("⚖️ Gas Fees vs ETH Transferred (Per Transaction)")
 
     # Define outliers (top 1% by ETH transferred or gas fee)
-    eth_cutoff = df["value_ETH"].quantile(0.99)
+    eth_cutoff = df["value_eth"].quantile(0.99)
     gas_cutoff = df["gasFee_ETH"].quantile(0.99)
 
     # Split data
-    inliers = df[(df["value_ETH"] > 0) & (df["value_ETH"] < eth_cutoff) & (df["gasFee_ETH"] < gas_cutoff)].copy()
-    outliers = df[(df["value_ETH"] >= eth_cutoff) | (df["gasFee_ETH"] >= gas_cutoff)].copy()
+    inliers = df[(df["value_eth"] > 0) & (df["value_ETH"] < eth_cutoff) & (df["gasFee_ETH"] < gas_cutoff)].copy()
+    outliers = df[(df["value_eth"] >= eth_cutoff) | (df["gasFee_ETH"] >= gas_cutoff)].copy()
 
     # Extract data
-    x_in = inliers["value_ETH"].values
+    x_in = inliers["value_eth"].values
     y_in = inliers["gasFee_ETH"].values
-    x_out = outliers["value_ETH"].values
+    x_out = outliers["value_eth"].values
     y_out = outliers["gasFee_ETH"].values
 
     # Plot
@@ -232,7 +232,7 @@ if wallet:
     st.subheader("🚨 Notable Outlier Transactions")
     if not outliers.empty:
         outliers = outliers.sort_values("gasFee_ETH", ascending=False).drop_duplicates("hash")
-        display_cols = ["timeStamp", "value_ETH", "gasFee_ETH", "to", "tx_link"]
+        display_cols = ["timeStamp", "value_eth", "gasFee_ETH", "to", "tx_link"]
         st.dataframe(outliers[display_cols].rename(columns={
             "value_ETH": "ETH Transferred",
             "gasFee_ETH": "Gas Fee (ETH)",
