@@ -48,7 +48,7 @@ if address:
                 "module": "account",
                 "action": "txlist",
                 "address": address,
-                "startblock": startblock,
+                "startblock": 0,
                 "endblock": 99999999,
                 "page": page,
                 "offset": TXS_PER_PAGE,
