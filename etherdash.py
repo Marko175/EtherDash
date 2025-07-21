@@ -98,7 +98,7 @@ if wallet:
             df = pd.DataFrame(txs)
             #df["value_eth"] = df["value"].astype(float) / 1e18
             #df["timestamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit="s")
-            #df["isError"] = df["isError"].astype(int)
+            df["isError"] = df["isError"].astype(int)
 
             df["timestamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit='s')
             df["value_eth"] = df["value"].astype(float) / 1e18
