@@ -148,16 +148,6 @@ if wallet:
     col4.metric("Min Fee (ETH)", f"{min_fee:.5f}")
 
     # Display
-    st.success(f"📦 Total Transactions Analyzed: {total_tx}")
-    st.subheader("📊 Gas Fee Summary")
-    st.metric("Avg Fee (ETH)", f"{df['gasFee_ETH'].mean():.6f}")
-    st.metric("Max Fee (ETH)", f"{df['gasFee_ETH'].max():.6f}")
-    st.metric("Min Fee (ETH)", f"{df['gasFee_ETH'].min():.6f}")
-    st.markdown(f"📉 **Current ETH Price:** ${eth_price:,.2f}")
-    st.metric("🔻 Total Gas Fees (ETH)", f"{total_fees_eth:.4f}")
-    st.metric("💸 Total Gas Fees (USD)", f"${total_fees_usd:,.2f}")
-    st.metric("📊 Avg Fee Per Tx (ETH)", f"{avg_fee_per_tx:.6f}")
-    st.markdown(f"**Tx Success Rate:** {badge}", unsafe_allow_html=True)
 
     st.subheader("📄 Recent Transactions")
     # Show most recent transactions first
