@@ -29,8 +29,6 @@ if wallet:
     
         try:
             response = requests.get(url, params=params, headers=headers, timeout=5)
-            st.write(f"Status code: {response.status_code}")
-            st.write(f"Raw response: {response.text}")
     
             response.raise_for_status()
             data = response.json()
