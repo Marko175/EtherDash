@@ -31,9 +31,7 @@ if wallet:
         return None
     
     eth_price = get_eth_price()
-    response = requests.get("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd")
-    st.write(response.status_code)
-    st.write(response.text)
+
 
 
     # === Fetch wallet balance ===
