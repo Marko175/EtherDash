@@ -96,9 +96,18 @@ if wallet:
             st.info("ℹ️ No transactions found.")
         else:
             df = pd.DataFrame(txs)
-            df["value_eth"] = df["value"].astype(float) / 1e18
-            df["timestamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit="s")
-            df["isError"] = df["isError"].astype(int)
+            #df["value_eth"] = df["value"].astype(float) / 1e18
+            #df["timestamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit="s")
+            #df["isError"] = df["isError"].astype(int)
+
+            df["timeStamp"] = pd.to_datetime(df["timeStamp"].astype(int), unit='s')
+            df["value_ETH"] = df["value"].astype(float) / 1e18
+            df["gasPrice_Gwei"] = df["gasPrice"].astype(float) / 1e9
+            df["gasFee_ETH"] = (df["gasUsed"].astype(float) * df["gasPrice"].astype(float)) / 1e18
+            df["status"] = df["isError"].apply(lambda x: "❌ Failed" if x == "1" else "✅ Success")
+            df["direction"] = df.apply(lambda row: "📤 Out" if row["from"].lower() == address.lower() else "📥 In", axis=1)
+            df["tx_link"] = df["hash"].apply(lambda h: f"[View ↗](https://etherscan.io/tx/{h})")
+            df["month"] = df["timeStamp"].dt.to_period("M").astype(str)
 
             # === Failed transaction stats ===
             total_tx = len(df)
