@@ -21,13 +21,42 @@ if wallet:
         "apikey": ETHERSCAN_API_KEY
     }
 
+    # === Get ETH price in USD ===
+    def get_eth_price():
+        url = "https://api.coingecko.com/api/v3/simple/price"
+        params = {"ids": "ethereum", "vs_currencies": "usd"}
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json().get("ethereum", {}).get("usd", None)
+        return None
+    
+    eth_price = get_eth_price()
+    
+    # === Fetch wallet balance ===
+    balance_params = {
+        "module": "account",
+        "action": "balance",
+        "address": wallet,
+        "tag": "latest",
+        "apikey": ETHERSCAN_API_KEY
+    }
     balance_response = requests.get(ETHERSCAN_API_URL, params=balance_params).json()
+    
     if balance_response.get("status") == "1":
         balance_eth = int(balance_response["result"]) / 1e18
-        st.subheader(f"💰 Wallet Balance: {balance_eth:.4f} ETH")
+        balance_usd = balance_eth * eth_price if eth_price else None
+    
+        st.subheader("💰 Wallet Balance")
+        col1, col2 = st.columns(2)
+        col1.metric("ETH", f"{balance_eth:.4f} ETH")
+        if balance_usd:
+            col2.metric("USD", f"${balance_usd:,.2f}")
+        else:
+            col2.write("USD conversion unavailable")
     else:
-        st.error(f"❌ Error fetching balance: {balance_response.get('message', 'Unknown error')}")
+        st.error("❌ Failed to retrieve wallet balance.")
         st.stop()
+
 
     # === Fetch last 10,000 transactions ===
     tx_params = {
