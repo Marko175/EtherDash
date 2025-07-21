@@ -31,7 +31,8 @@ if wallet:
         return None
     
     eth_price = get_eth_price()
-    
+    st.write(f"🪙 Current ETH Price: ${eth_price:,.2f}")
+
     # === Fetch wallet balance ===
     balance_params = {
         "module": "account",
