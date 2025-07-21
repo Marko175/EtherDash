@@ -22,7 +22,7 @@ latest_block_res = requests.get("https://api.etherscan.io/api", params={
 
 latest_block = int(latest_block_res["result"], 16)
 startblock = 0
-TXS_PER_PAGE = 1000
+TXS_PER_PAGE = 10
 
 if address:
     try:
