@@ -22,8 +22,7 @@ latest_block_res = requests.get("https://api.etherscan.io/api", params={
 
 latest_block = int(latest_block_res["result"], 16)
 startblock = 0
-TXS_PER_PAGE = 10
-MAX_PAGES = 10
+TXS_PER_PAGE = 1000
 
 if address:
     try:
@@ -40,31 +39,27 @@ if address:
 
         # Pagination: Fetch all transactions in past 2 years
         all_txs = []
-        page = 1
         st.info("⏳ Fetching past transactions...")
 
-        while page <= MAX_PAGES:
-            tx_params = {
-                "module": "account",
-                "action": "txlist",
-                "address": address,
-                "startblock": startblock,
-                "endblock": 99999999,
-                "page": page,
-                "offset": TXS_PER_PAGE,
-                "sort": "des",
-                "apikey": ETHERSCAN_API_KEY
-            }
+        tx_params = {
+            "module": "account",
+            "action": "txlist",
+            "address": address,
+            "startblock": startblock,
+            "endblock": 99999999,
+            "offset": TXS_PER_PAGE,
+            "sort": "des",
+            "apikey": ETHERSCAN_API_KEY
+        }
 
-            res = requests.get("https://api.etherscan.io/api", params=tx_params).json()
-            txs = res.get("result", [])
-            if not txs:
-                break
-            all_txs.extend(txs)
-            if len(txs) < TXS_PER_PAGE:
-                break
-            page += 1
-            time.sleep(0.2)
+        res = requests.get("https://api.etherscan.io/api", params=tx_params).json()
+        txs = res.get("result", [])
+        if not txs:
+            break
+        all_txs.extend(txs)
+        if len(txs) < TXS_PER_PAGE:
+            break
+        time.sleep(0.2)
 
         if not all_txs:
             st.warning("⚠️ No transactions found in the past 2 years.")
