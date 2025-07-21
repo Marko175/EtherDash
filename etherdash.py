@@ -106,7 +106,6 @@ if wallet:
             df["gasFee_ETH"] = (df["gasUsed"].astype(float) * df["gasPrice"].astype(float)) / 1e18
             df["status"] = df["isError"].apply(lambda x: "❌ Failed" if x == "1" else "✅ Success")
             df["tx_link"] = df["hash"].apply(lambda h: f"[View ↗](https://etherscan.io/tx/{h})")
-            df["month"] = df["timeStamp"].dt.to_period("M").astype(str)
 
             # === Failed transaction stats ===
             total_tx = len(df)
