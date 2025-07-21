@@ -37,7 +37,7 @@ if wallet:
         "startblock": 0,
         "endblock": 99999999,
         "page": 1,
-        "offset": 10000,
+        "offset": 1000000,
         "sort": "desc",
         "apikey": ETHERSCAN_API_KEY
     }
