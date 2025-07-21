@@ -149,21 +149,6 @@ if wallet:
 
     # Display
 
-    st.subheader("📄 Recent Transactions")
-    # Show most recent transactions first
-    sorted_df = df.sort_values("timeStamp", ascending=False)
-
-    st.dataframe(sorted_df[[
-        "timeStamp", "direction", "to", "value_ETH", "gasFee_ETH", "gasPrice_Gwei", "status", "tx_link"
-    ]])
-
-
-    st.subheader("📈 Gas Fee Over Time")
-    st.line_chart(df.set_index("timeStamp")["gasFee_ETH"])
-
-    st.subheader("📆 Gas Fees Per Month")
-    monthly_fees = df.groupby("month")["gasFee_ETH"].sum()
-    st.bar_chart(monthly_fees)
 
     # Step 1: Define percentiles for filtering
     eth_cutoff = df["value_ETH"].quantile(0.995)
