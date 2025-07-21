@@ -25,10 +25,25 @@ if wallet:
     def get_eth_price():
         url = "https://api.coingecko.com/api/v3/simple/price"
         params = {"ids": "ethereum", "vs_currencies": "usd"}
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.json().get("ethereum", {}).get("usd", None)
-        return None
+        headers = {"User-Agent": "Mozilla/5.0"}
+    
+        try:
+            response = requests.get(url, params=params, headers=headers, timeout=5)
+            st.write(f"Status code: {response.status_code}")
+            st.write(f"Raw response: {response.text}")
+    
+            response.raise_for_status()
+            data = response.json()
+            price = data.get("ethereum", {}).get("usd", None)
+    
+            if price is None:
+                st.warning("⚠️ ETH price not found in API response.")
+            return price
+    
+        except Exception as e:
+            st.error(f"❌ Failed to fetch ETH price: {e}")
+            return None
+
     
     eth_price = get_eth_price()
     st.write(f"💱 1 ETH = ${eth_price:,.2f} USD")
