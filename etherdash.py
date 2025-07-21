@@ -50,8 +50,6 @@ if address:
                 "address": address,
                 "startblock": 0,
                 "endblock": 99999999,
-                "page": page,
-                "offset": TXS_PER_PAGE,
                 "sort": "desc",
                 "apikey": ETHERSCAN_API_KEY
             }
