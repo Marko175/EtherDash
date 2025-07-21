@@ -54,11 +54,7 @@ if address:
 
         res = requests.get("https://api.etherscan.io/api", params=tx_params).json()
         txs = res.get("result", [])
-        if not txs:
-            break
         all_txs.extend(txs)
-        if len(txs) < TXS_PER_PAGE:
-            break
         time.sleep(0.2)
 
         if not all_txs:
